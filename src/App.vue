@@ -100,6 +100,7 @@ export default {
         const leftArea = Math.PI * Math.pow(leftCircle.radius * leftCircle.scaleX, 2);
         const rightArea = Math.PI * Math.pow(rightCircle.radius * rightCircle.scaleX, 2);
 
+
         if (leftArea > rightArea) {
           scaleArm.set({angle: -10, top: 220});
         } else if (rightArea > leftArea) {
@@ -107,6 +108,7 @@ export default {
         } else {
           scaleArm.set({angle: 0, top: 195});
         }
+
 
         let leftPanTop = 200;
         let rightPanTop = 200;
@@ -133,7 +135,6 @@ export default {
         rightCircle.scaleY = Math.max(minScale, Math.min(maxScale, rightCircle.scaleY));
 
 
-        // Пересчитать центр кругов
         const leftPanCenter = {
           left: leftPan.left + leftPan.width / 2,
           top: leftPan.top + leftPan.height / 2,
@@ -146,15 +147,14 @@ export default {
 
         // Обновление позиции кругов
         leftCircle.set({
-          left: leftPanCenter.left - leftCircle.radius,
-          top: lineLeftPan.top - leftCircle.height,
+          left: leftPanCenter.left - leftCircle.radius * leftCircle.scaleX,
+          top: lineLeftPan.top - leftCircle.radius * 2 * leftCircle.scaleY,
         });
 
         rightCircle.set({
-          left: rightPanCenter.left - rightCircle.radius,
-          top: lineRightPan.top - rightCircle.height,
+          left: rightPanCenter.left - rightCircle.radius * rightCircle.scaleX,
+          top: lineRightPan.top - rightCircle.radius * 2 * rightCircle.scaleY,
         });
-
 
         canvas.renderAll();
       };
